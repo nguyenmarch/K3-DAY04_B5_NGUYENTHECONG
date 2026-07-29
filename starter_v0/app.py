@@ -487,7 +487,7 @@ def initialize_session(
 
 
 def assistant_avatar() -> str:
-    return "✦"
+    return "✨"
 
 
 def render_brand() -> None:
@@ -650,7 +650,7 @@ def render_conversation() -> None:
         return
 
     for turn in turns:
-        with st.chat_message("user", avatar="♡"):
+        with st.chat_message("user", avatar="👤"):
             st.markdown(turn["user"])
 
         with st.chat_message("assistant", avatar=assistant_avatar()):
@@ -667,7 +667,7 @@ def execute_chat_turn(
     model: str | None,
     max_rounds: int,
 ) -> None:
-    with st.chat_message("user", avatar="♡"):
+    with st.chat_message("user", avatar="👤"):
         st.markdown(prompt)
 
     system_prompt = (ARTIFACTS_DIR / "system_prompt.md").read_text(encoding="utf-8")
