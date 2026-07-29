@@ -1,0 +1,28 @@
+{
+  "transcript_id": "v3_groq_ui_20260729T115020348535",
+  "version": "v3",
+  "artifact_version": "v3+p076a29165e32+t4c74256836a6",
+  "prompt_hash": "076a29165e32406d614954ac8aa46c58200d5af1bf4bf214dc4c51070f70c8ec",
+  "tools_hash": "4c74256836a626adf1c87e7a3bd2fd316ab63687f8dcfed0f66969e82c556a37",
+  "provider": "groq",
+  "model": null,
+  "system_prompt": "/home/nguyen-cong/Desktop/LabCode/K3-DAY04_B5_NGUYENTHECONG/starter_v0/artifacts/system_prompt.md",
+  "tools": "/home/nguyen-cong/Desktop/LabCode/K3-DAY04_B5_NGUYENTHECONG/starter_v0/artifacts/tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-07-29T11:50:20",
+  "updated_at": "2026-07-29T11:50:42",
+  "source": "streamlit_ui",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-07-29T11:50:38",
+      "user": "trên x đang nói j về chủ tịch phạm nhật vượng",
+      "status": "provider_error",
+      "rounds": [],
+      "tool_events": [],
+      "error": "APIStatusError: Error code: 413 - {'error': {'message': 'Request too large for model `llama-3.1-8b-instant` in organization `org_01kfdbqtxzfja9qfejnwexvw02` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Requested 10388, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+      "ended_at": "2026-07-29T11:50:42"
+    }
+  ]
+}

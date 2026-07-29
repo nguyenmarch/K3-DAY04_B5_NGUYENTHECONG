@@ -1,0 +1,35 @@
+{
+  "transcript_id": "v3_groq_ui_20260729T122115040485",
+  "version": "v3",
+  "artifact_version": "v3+p076a29165e32+t4c74256836a6",
+  "prompt_hash": "076a29165e32406d614954ac8aa46c58200d5af1bf4bf214dc4c51070f70c8ec",
+  "tools_hash": "4c74256836a626adf1c87e7a3bd2fd316ab63687f8dcfed0f66969e82c556a37",
+  "provider": "groq",
+  "model": null,
+  "system_prompt": "/home/nguyen-cong/Desktop/LabCode/K3-DAY04_B5_NGUYENTHECONG/starter_v0/artifacts/system_prompt.md",
+  "tools": "/home/nguyen-cong/Desktop/LabCode/K3-DAY04_B5_NGUYENTHECONG/starter_v0/artifacts/tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-07-29T12:21:15",
+  "updated_at": "2026-07-29T12:21:27",
+  "source": "streamlit_ui",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-07-29T12:21:26",
+      "user": "dấu hiệu của người gay",
+      "status": "answered",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "Tôi không thể trả lời các nội dung thể hiện các dấu hiệu của người gay.",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [],
+      "assistant_text": "Tôi không thể trả lời các nội dung thể hiện các dấu hiệu của người gay.",
+      "ended_at": "2026-07-29T12:21:27"
+    }
+  ]
+}

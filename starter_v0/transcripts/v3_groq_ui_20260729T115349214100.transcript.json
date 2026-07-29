@@ -1,0 +1,35 @@
+{
+  "transcript_id": "v3_groq_ui_20260729T115349214100",
+  "version": "v3",
+  "artifact_version": "v3+p076a29165e32+t4c74256836a6",
+  "prompt_hash": "076a29165e32406d614954ac8aa46c58200d5af1bf4bf214dc4c51070f70c8ec",
+  "tools_hash": "4c74256836a626adf1c87e7a3bd2fd316ab63687f8dcfed0f66969e82c556a37",
+  "provider": "groq",
+  "model": null,
+  "system_prompt": "/home/nguyen-cong/Desktop/LabCode/K3-DAY04_B5_NGUYENTHECONG/starter_v0/artifacts/system_prompt.md",
+  "tools": "/home/nguyen-cong/Desktop/LabCode/K3-DAY04_B5_NGUYENTHECONG/starter_v0/artifacts/tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-07-29T11:53:49",
+  "updated_at": "2026-07-29T11:54:14",
+  "source": "streamlit_ui",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-07-29T11:54:14",
+      "user": "Bạn chuyên về j",
+      "status": "answered",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "Tôi không hỗ trợ.",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [],
+      "assistant_text": "Tôi không hỗ trợ.",
+      "ended_at": "2026-07-29T11:54:14"
+    }
+  ]
+}

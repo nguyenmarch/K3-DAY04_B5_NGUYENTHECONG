@@ -3,7 +3,7 @@
 ## Team
 
 - Team: K3-DAY04-B5
-- Members: Nguyễn Thế Công
+- Members: Nguyễn Thế Công - Mai Quốc 
 - Provider/model: Groq (`llama-3.1-8b-instant`); historical evidence used Gemini
 
 # PHẦN A — Giới thiệu agent
