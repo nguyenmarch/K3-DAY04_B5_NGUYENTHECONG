@@ -1,0 +1,28 @@
+{
+  "transcript_id": "v3_groq_ui_20260729T104418308532",
+  "version": "v3",
+  "artifact_version": "v3+p82a7d3460084+t159dc7c3753c",
+  "prompt_hash": "82a7d34600841960ef946d35063da50fd742a7a92219449c58e985d36eaec235",
+  "tools_hash": "159dc7c3753ca02cfc55317bd565ce10c94cfde6b05eadd1f7713ca55fa0e09d",
+  "provider": "groq",
+  "model": null,
+  "system_prompt": "/home/nguyen-cong/Desktop/LabCode/K3-DAY04_B5_NGUYENTHECONG/starter_v0/artifacts/system_prompt.md",
+  "tools": "/home/nguyen-cong/Desktop/LabCode/K3-DAY04_B5_NGUYENTHECONG/starter_v0/artifacts/tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-07-29T10:44:18",
+  "updated_at": "2026-07-29T10:44:51",
+  "source": "streamlit_ui",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-07-29T10:44:38",
+      "user": "Tìm cho 1 bài báo về chủ đề Continuous Learning",
+      "status": "provider_error",
+      "rounds": [],
+      "tool_events": [],
+      "error": "RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01kfdbqtxzfja9qfejnwexvw02` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 3060, Requested 4971. Please try again in 232.499999ms. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+      "ended_at": "2026-07-29T10:44:51"
+    }
+  ]
+}

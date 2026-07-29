@@ -1,0 +1,132 @@
+{
+  "transcript_id": "v3_gemini_ui_20260729T102357051093",
+  "version": "v3",
+  "artifact_version": "v3+p82a7d3460084+t159dc7c3753c",
+  "prompt_hash": "82a7d34600841960ef946d35063da50fd742a7a92219449c58e985d36eaec235",
+  "tools_hash": "159dc7c3753ca02cfc55317bd565ce10c94cfde6b05eadd1f7713ca55fa0e09d",
+  "provider": "gemini",
+  "model": null,
+  "system_prompt": "/home/nguyen-cong/Desktop/LabCode/K3-DAY04_B5_NGUYENTHECONG/starter_v0/artifacts/system_prompt.md",
+  "tools": "/home/nguyen-cong/Desktop/LabCode/K3-DAY04_B5_NGUYENTHECONG/starter_v0/artifacts/tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-07-29T10:23:57",
+  "updated_at": "2026-07-29T10:27:36",
+  "source": "streamlit_ui",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-07-29T10:24:14",
+      "user": "Hello, Donal Trump có đăng gì không?",
+      "status": "answered",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "timeline",
+              "args": {
+                "limit": 5,
+                "screenname": "realDonaldTrump"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "timeline",
+              "args": {
+                "limit": 5,
+                "screenname": "realDonaldTrump"
+              },
+              "result": {
+                "tool": "get_user_tweets",
+                "error": "RuntimeError",
+                "message": "Missing RAPIDAPI_KEY env var"
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "Rất tiếc, hiện tại hệ thống gặp lỗi kỹ thuật (thiếu cấu hình kết nối) nên tôi không thể truy cập và kiểm tra các bài đăng gần đây trên tài khoản X (Twitter) của Donald Trump (@realDonaldTrump) được. Mong bạn thông cảm!",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "timeline",
+          "args": {
+            "limit": 5,
+            "screenname": "realDonaldTrump"
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "error": "RuntimeError",
+            "message": "Missing RAPIDAPI_KEY env var"
+          }
+        }
+      ],
+      "assistant_text": "Rất tiếc, hiện tại hệ thống gặp lỗi kỹ thuật (thiếu cấu hình kết nối) nên tôi không thể truy cập và kiểm tra các bài đăng gần đây trên tài khoản X (Twitter) của Donald Trump (@realDonaldTrump) được. Mong bạn thông cảm!",
+      "ended_at": "2026-07-29T10:24:25"
+    },
+    {
+      "turn_index": 2,
+      "started_at": "2026-07-29T10:27:30",
+      "user": "Lấy 5 tweet mới nhất của Elon Musk",
+      "status": "answered",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "timeline",
+              "args": {
+                "limit": 5,
+                "screenname": "elonmusk"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "timeline",
+              "args": {
+                "limit": 5,
+                "screenname": "elonmusk"
+              },
+              "result": {
+                "tool": "get_user_tweets",
+                "error": "RuntimeError",
+                "message": "Missing RAPIDAPI_KEY env var"
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "Rất tiếc, hiện tại hệ thống gặp lỗi kỹ thuật (thiếu cấu hình kết nối API) nên tôi không thể truy cập và lấy các tweet mới nhất từ tài khoản của Elon Musk (@elonmusk) được. Mong bạn thông cảm cho sự bất tiện này!",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "timeline",
+          "args": {
+            "limit": 5,
+            "screenname": "elonmusk"
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "error": "RuntimeError",
+            "message": "Missing RAPIDAPI_KEY env var"
+          }
+        }
+      ],
+      "assistant_text": "Rất tiếc, hiện tại hệ thống gặp lỗi kỹ thuật (thiếu cấu hình kết nối API) nên tôi không thể truy cập và lấy các tweet mới nhất từ tài khoản của Elon Musk (@elonmusk) được. Mong bạn thông cảm cho sự bất tiện này!",
+      "ended_at": "2026-07-29T10:27:36"
+    }
+  ]
+}

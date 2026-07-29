@@ -63,7 +63,9 @@ def tool_results_message(events: list[dict[str, Any]]) -> dict[str, str]:
             "TOOL_RESULTS_JSON:\n"
             f"{json_text(events, max_chars=24000)}\n\n"
             "Use only these tool results. If the user asked for a digest and the items are ready, "
-            "call the formatting tool. Otherwise answer the user directly with cited sources when available."
+            "call the formatting tool. Otherwise answer the user directly with cited sources when available. "
+            "If a tool result contains error, state that exact upstream/configuration error and the suggested "
+            "fix; never replace it with a claim that you lack access to a public account or URL."
         ),
     }
 
@@ -151,7 +153,7 @@ def write_transcript(path: Path, transcript: dict[str, Any]) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Interactive Research Agent chat with transcript logging.")
-    parser.add_argument("--provider", choices=["openrouter", "openai", "anthropic", "gemini"], required=True)
+    parser.add_argument("--provider", choices=["groq", "openrouter", "openai", "anthropic", "gemini"], required=True)
     parser.add_argument("--model", default=None)
     parser.add_argument("--version", required=True, help="Student-chosen artifact version label, e.g. v0, v1, v2.")
     parser.add_argument("--system-prompt", type=Path, default=ARTIFACTS_DIR / "system_prompt.md")

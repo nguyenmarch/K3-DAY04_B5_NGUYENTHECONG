@@ -19,6 +19,12 @@ def _twitter_get(path: str, params: dict[str, Any]) -> dict[str, Any]:
         headers={"x-rapidapi-key": key, "x-rapidapi-host": host},
         timeout=TIMEOUT,
     )
+    if response.status_code in {401, 403}:
+        raise RuntimeError(
+            "Twitter API45 authorization failed. Check that RAPIDAPI_KEY belongs "
+            "to a RapidAPI app subscribed to Twitter API45 and that "
+            "RAPIDAPI_TWITTER_HOST is twitter-api45.p.rapidapi.com."
+        )
     response.raise_for_status()
     return response.json()
 
@@ -49,4 +55,3 @@ def get_user_tweets(screenname: str = "", limit: int = 5) -> dict[str, Any]:
         return {"tool": "get_user_tweets", "screenname": screenname, "items": _tweets_from(data, limit)}
     except Exception as exc:
         return err("get_user_tweets", exc)
-

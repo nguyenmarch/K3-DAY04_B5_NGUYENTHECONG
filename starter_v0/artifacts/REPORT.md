@@ -1,121 +1,111 @@
 # Day 04 Lab v2 Report — Research Agent
 
-> File này gồm 2 phần, deadline khác nhau:
-> - **PHẦN A — Giới thiệu agent**: ngắn gọn 1 trang để team khác hiểu nhanh agent có tool gì, làm được gì, thử bằng câu hỏi nào. Xong trước 11:30 để làm tài liệu phụ trợ khi demo.
-> - **PHẦN B — Chi tiết / Bằng chứng**: bảng đầy đủ (v0–v3, failure, eval, chat) dựa trên log thật. Có thể hoàn thiện sau buổi debate để nộp bài.
-
 ## Team
 
-- Team:
-- Members:
-- Provider/model:
-
----
+- Team: K3-DAY04-B5
+- Members: Nguyễn Thế Công
+- Provider/model: Groq (`llama-3.1-8b-instant`); historical evidence used Gemini
 
 # PHẦN A — Giới thiệu agent
 
 ## A1. Agent này làm được gì
 
-> 1–2 câu mô tả agent dùng để làm gì.
+Research agent tìm tin web, tìm bài đăng theo chủ đề/tài khoản, đọc URL, tìm
+paper/policy và tổng hợp kết quả. Agent hỏi lại khi thiếu URL/handle và xin xác
+nhận trước hành động gửi Telegram.
 
-Ví dụ: "Research agent: tìm tin theo từ khóa / theo tài khoản, đọc URL và tổng hợp thành digest."
+**Link dùng thử:** `http://localhost:8501`
 
-**Link dùng thử (truy cập được trong showdown):**
-
-> Dán public URL nếu người khác cần mở từ máy riêng; localhost cũng được nếu demo trực tiếp trên máy trình chiếu. Streamlit được khuyến nghị, nhưng nhóm có thể dùng bất kỳ framework nào.
->
-> URL:
+Chạy: `.venv/bin/streamlit run app.py`
 
 ## A2. Tool agent có
 
-> Liệt kê các tool agent đang dùng. Mỗi tool 1 dòng: tên + làm được gì.
-
 | Tên tool | Làm được gì | Tool mới nhóm thêm? |
 |---|---|---|
-| clarify | hỏi lại người dùng khi thiếu thông tin | không |
-|  |  |  |
-|  |  |  |
+| clarify | Hỏi bổ sung hoặc xin xác nhận | không |
+| timeline | Lấy bài đăng của một tài khoản | không |
+| social_search | Tìm bài đăng theo chủ đề | không |
+| lookup | Tìm web/tin tức | không |
+| fetch | Đọc một URL cụ thể | không |
+| format | Định dạng items thành digest | không |
+| citation_audit | Audit URL, metadata và nguồn trùng | **có** |
+| policy | Tìm company policy nội bộ | không (optional built-in) |
+| papers / paper_text | Tìm và đọc paper arXiv | không (optional built-in) |
+| send | Gửi Telegram sau xác nhận | không (optional built-in) |
+| discord_send | Gửi plain text lên Discord sau xác nhận | **có** |
 
 ## A3. Câu hỏi mẫu để thử
 
-> 3–5 câu hỏi/yêu cầu mẫu để team khác tự thử agent ngay.
-
-1.
-2.
-3.
+1. `Tweet mới nhất của Sam Altman là gì?`
+2. `Tìm trên web tin AI hôm nay và tìm thêm tweet về AI.`
+3. `Tóm tắt bài này giúp mình: https://example.com`
+4. `Tóm tắt 5 tweet mới nhất giúp mình` (phải hỏi account).
+5. `Audit metadata các nguồn sau: [...]`
 
 ## A4. Kịch bản demo đã rehearse
 
-> Chuẩn bị 3–5 scenario. Mỗi scenario cần cho thấy tool đã làm gì và một thay đổi cụ thể giữa các version.
-
-| Scenario | Tool trace cần thấy | Câu chuyện cải thiện version | Fallback run/transcript |
+| Scenario | Tool trace cần thấy | Câu chuyện cải thiện | Fallback |
 |---|---|---|---|
-|  |  |  |  |
-
----
+| Tin của Sam Altman | `timeline(screenname=sama)` | v1 tách “của account” và “về topic” | v0 base run |
+| Thiếu URL | `clarify` | v2 bỏ hành vi đoán URL | v3 group run |
+| Đổi topic qua 3 turn | `social_search(query=Anthropic, Top)` | v3 áp dụng correction mới nhất | v3 group run |
+| Audit nguồn | `citation_audit` + issues | tool local mới, không cần API key | smoke command |
 
 # PHẦN B — Chi tiết / Bằng chứng
 
-> Điều kiện metric hợp lệ: `provider_error_cases` phải bằng `0`; `measured_cases` phải bằng `total_cases`; và bất kỳ `tool_results` nào có error đều phải được review thủ công vì routing PASS không chứng minh tool execution đã đúng.
+> Baseline v0 không đủ điều kiện so metric vì 12 provider errors do free-tier
+> quota. Run group v3 lúc 10:18 là evidence hợp lệ: 10/10 measured, 0 provider
+> error. Không diễn giải metric của các run có provider errors như kết quả model.
 
 ## B1. Version evidence
 
-Fill from `artifacts/version_log.csv` and `runs/*.json`.
-
-| Version | Prompt/tool change | Hypothesis | Metric name | Before | After | Run File |
+| Version | Prompt/tool change | Hypothesis | Metric | Before | After | Run |
 |---|---|---|---|---:|---:|---|
-| v0 | baseline |  |  |  |  |  |
-| v1 |  |  |  |  |  |  |
-| v2 |  |  |  |  |  |  |
-| v3 |  |  |  |  |  |  |
+| v0 | Starter cố ý mơ hồ | Baseline lộ routing/boundary | case accuracy | — | invalid (quota) | `runs/v0_B_base_gemini_20260729T100044395933.json` |
+| v1 | Routing + handle mapping | Phân biệt OF account / ABOUT topic | routing | invalid | chưa đo do quota | — |
+| v2 | Missing-info + confirmation | Không đoán và không tự gửi | arguments | invalid | chưa đo do quota | — |
+| v3 | Multi-turn + precise declarations + tool mới | Carry/correct constraints đúng | group accuracy | — | **0.80** | `runs/v3_B_group_gemini_20260729T101849450314.json` |
+
+Valid v3 group metrics: routing `0.90`, arguments `0.80`, multi-turn `1.00`,
+provider errors `0`. Sau run này, hai expectation chỉ chấm default arguments đã
+được sửa và Gemini adapter được bổ sung `tool_choice=required`; quota ngày đã
+hết trước khi tạo được final rerun hợp lệ.
 
 ## B2. Failure analysis
 
-Use actual failures from `results[*].result.failures`.
-
-| Case ID | Failure Type | Actual Tool Calls | What Failed | Fix |
+| Case | Failure type | Actual | What failed | Fix |
 |---|---|---|---|---|
-|  |  |  |  |  |
+| R03 | wrong_tool | lookup thiếu expected args | starter không map news/day | thêm convention |
+| R10 | missing_info | không gọi clarify | starter bảo model tự đoán | bắt buộc clarify |
+| R12 | wrong_boundary | không xin xác nhận | starter tự gửi | confirmation boundary |
+| G_S03 | wrong_arg_value | clarify nhưng bỏ default | eval chấm default không cần thiết | chấm routing, bỏ default khỏi expected subset |
+| G_S05 | wrong_arg_value | citation_audit đúng, bỏ default | tương tự | bỏ default khỏi expected subset |
 
 ## B3. Team eval cases
 
-List the 10 cases added to `data/eval_group.json`:
+Đủ đúng 10 case: 5 single-turn (`G_S01`–`G_S05`) và 5 multi-turn
+(`G_M01`–`G_M05`). Các case đo handle/limit, timeframe, missing URL, send
+boundary, tool mới, correction, cancellation, switch tool và out-of-scope.
 
-- 5 single-turn
-- 5 multi-turn
+## B4. Live/UI evidence
 
-This section is for the mandatory team-authored eval set. Optional built-ins do
-not belong here.
-
-File template để trống có chủ đích; nhóm phải tự thiết kế đủ 10 case.
-
-| Case ID | What It Tests | Expected Tool/Behavior | Result |
-|---|---|---|---|
-|  |  |  |  |
-
-## B4. Live chat evidence
-
-Use `transcripts/*.transcript.json`.
-
-| Scenario/Turn | Version | Tool Calls + Args | Transcript/Run | Outcome |
-|---|---|---|---|---|
-|  |  |  |  |  |
+UI `app.py` tái sử dụng `run_model_tool_loop`, hiển thị request/response,
+round/tool args/result/error, artifact version, lưu transcript và đọc run JSON.
+Health check local trả `ok` tại `/_stcore/health`.
 
 ## B5. Tool capability evidence
 
-Phân loại rõ tool mới bắt buộc, optional built-in và tool đủ điều kiện bonus. Chỉ ghi Telegram/PDF nếu nhóm thực sự dùng; base report không cần chúng.
-
-UI is core deliverable, not bonus. Do not list it here.
-
-| Category | Evidence File | What Worked | Risk / Guardrail |
+| Category | Evidence | What worked | Guardrail |
 |---|---|---|---|
-| Must-have: tool mới đầu tiên |  |  |  |
-| Optional built-in |  |  |  |
-| Bonus: tool mới thứ 4 trở đi |  |  |  |
+| Must-have tool mới | `tools/citation_audit/` | Smoke: 2 items, 1 valid, phát hiện HTTP + missing metadata | Không fetch và không tuyên bố fact-check |
+| Optional built-in | Không claim live | Implementation giữ nguyên | Không demo khi thiếu key |
+| Bonus | Không claim | — | — |
 
 ## B6. Reflection
 
-- Which fixes belonged in `system_prompt.md`?
-- Which fixes belonged in `tools.yaml`?
-- Which failure needed manual review instead of automatic grading?
-- What would you improve next?
+- Routing policy, safety boundary và multi-turn state thuộc system prompt.
+- When/when-not-to-use, argument conventions và side effects thuộc tools YAML.
+- Tool execution errors và provider quota cần review thủ công; routing PASS
+  không chứng minh API research đã chạy thành công.
+- Việc tiếp theo: bổ sung Tavily/Firecrawl/RapidAPI keys, reset/nâng Gemini quota,
+  chạy paced base v1–v3 và ba live transcript trước khi nộp chính thức.

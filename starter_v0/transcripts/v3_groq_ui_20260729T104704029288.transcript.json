@@ -1,0 +1,132 @@
+{
+  "transcript_id": "v3_groq_ui_20260729T104704029288",
+  "version": "v3",
+  "artifact_version": "v3+p82a7d3460084+t159dc7c3753c",
+  "prompt_hash": "82a7d34600841960ef946d35063da50fd742a7a92219449c58e985d36eaec235",
+  "tools_hash": "159dc7c3753ca02cfc55317bd565ce10c94cfde6b05eadd1f7713ca55fa0e09d",
+  "provider": "groq",
+  "model": null,
+  "system_prompt": "/home/nguyen-cong/Desktop/LabCode/K3-DAY04_B5_NGUYENTHECONG/starter_v0/artifacts/system_prompt.md",
+  "tools": "/home/nguyen-cong/Desktop/LabCode/K3-DAY04_B5_NGUYENTHECONG/starter_v0/artifacts/tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-07-29T10:47:04",
+  "updated_at": "2026-07-29T10:48:12",
+  "source": "streamlit_ui",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-07-29T10:47:27",
+      "user": "Trên Facebook Sơn Tùng MTP có nói gì không?",
+      "status": "answered",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "timeline",
+              "args": {
+                "limit": 1,
+                "screenname": "son tung mtp"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "timeline",
+              "args": {
+                "limit": 1,
+                "screenname": "son tung mtp"
+              },
+              "result": {
+                "tool": "get_user_tweets",
+                "error": "HTTPError",
+                "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/timeline.php?screenname=son+tung+mtp"
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "Tôi không thể tìm kiếm thông tin về Sơn Tùng MTP trên Facebook vì tôi không có quyền truy cập vào tài khoản của anh ấy.",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "timeline",
+          "args": {
+            "limit": 1,
+            "screenname": "son tung mtp"
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "error": "HTTPError",
+            "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/timeline.php?screenname=son+tung+mtp"
+          }
+        }
+      ],
+      "assistant_text": "Tôi không thể tìm kiếm thông tin về Sơn Tùng MTP trên Facebook vì tôi không có quyền truy cập vào tài khoản của anh ấy.",
+      "ended_at": "2026-07-29T10:47:29"
+    },
+    {
+      "turn_index": 2,
+      "started_at": "2026-07-29T10:48:10",
+      "user": "Trên X post mới nhất của Elon Musk là gì?",
+      "status": "answered",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "timeline",
+              "args": {
+                "limit": 1,
+                "screenname": "elonmusk"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "timeline",
+              "args": {
+                "limit": 1,
+                "screenname": "elonmusk"
+              },
+              "result": {
+                "tool": "get_user_tweets",
+                "error": "HTTPError",
+                "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/timeline.php?screenname=elonmusk"
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "Tôi không thể tìm thấy thông tin về bài đăng mới nhất của Elon Musk trên Twitter vì tôi không có quyền truy cập vào tài khoản của anh ấy.",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "timeline",
+          "args": {
+            "limit": 1,
+            "screenname": "elonmusk"
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "error": "HTTPError",
+            "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/timeline.php?screenname=elonmusk"
+          }
+        }
+      ],
+      "assistant_text": "Tôi không thể tìm thấy thông tin về bài đăng mới nhất của Elon Musk trên Twitter vì tôi không có quyền truy cập vào tài khoản của anh ấy.",
+      "ended_at": "2026-07-29T10:48:12"
+    }
+  ]
+}

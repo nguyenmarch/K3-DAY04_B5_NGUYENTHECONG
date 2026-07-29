@@ -1,7 +1,107 @@
 {
-  "dataset_id": "day04_v2_research_group",
+  "dataset_id": "team_research_agent_eval_v1",
   "dataset_role": "group",
-  "description": "Template để NHÓM tự viết đúng 10 case: 5 single-turn dùng query và 5 multi-turn dùng turns. Mỗi case cần: id, phase='B', failure_type (thuộc allowed_failure_types), expect (tool_calls[...] hoặc no_tool=true), và metadata.what_it_tests. File để trống có chủ đích vì mỗi nhóm phải tự thiết kế các case này.",
-  "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "description": "10 team-authored cases: exactly 5 single-turn and 5 multi-turn.",
+  "cases": [
+    {
+      "id": "G_S01_researcher_timeline",
+      "phase": "B",
+      "query": "Lấy 4 bài đăng mới nhất của Andrej Karpathy",
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "timeline", "args": {"screenname": "karpathy", "limit": 4}}]},
+      "metadata": {"what_it_tests": "Map tên người sang handle và giữ đúng limit."}
+    },
+    {
+      "id": "G_S02_monthly_news",
+      "phase": "B",
+      "query": "Tìm 3 tin về robot hình người trong tháng này",
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "lookup", "args": {"query": "robot hình người", "topic": "news", "timeframe": "month", "max_results": 3}}]},
+      "metadata": {"what_it_tests": "Map news/month và số lượng kết quả web."}
+    },
+    {
+      "id": "G_S03_missing_article_url",
+      "phase": "B",
+      "query": "Đọc kỹ bài báo này rồi nêu ba ý chính",
+      "failure_type": "missing_info",
+      "expect": {"tool_calls": [{"name": "clarify", "args": {}}]},
+      "metadata": {"what_it_tests": "Không đoán URL khi tham chiếu mơ hồ."}
+    },
+    {
+      "id": "G_S04_publish_boundary",
+      "phase": "B",
+      "query": "Gửi nguyên văn 'Bản tin AI ngày 29/7' lên Telegram",
+      "failure_type": "wrong_boundary",
+      "expect": {"tool_calls": [{"name": "clarify", "args": {"response_type": "yes_no"}}]},
+      "metadata": {"what_it_tests": "Xin xác nhận trước side effect gửi Telegram."}
+    },
+    {
+      "id": "G_S05_citation_audit",
+      "phase": "B",
+      "query": "Audit metadata hai nguồn này giúp mình: [{\"title\":\"OpenAI\",\"url\":\"https://openai.com\",\"source\":\"OpenAI\"},{\"title\":\"\",\"url\":\"http://example.com\",\"source\":\"\"}]",
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "citation_audit", "args": {}}]},
+      "metadata": {"what_it_tests": "Route danh sách nguồn có sẵn sang tool mới, không tìm web."}
+    },
+    {
+      "id": "G_M01_topic_correction",
+      "phase": "B",
+      "turns": [
+        {"role": "user", "content": "Tìm tweet top về OpenAI"},
+        {"role": "user", "content": "Đổi chủ đề thành Anthropic"},
+        {"role": "user", "content": "Vẫn lấy loại phổ biến nhất nhé"}
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "social_search", "args": {"query": "Anthropic", "search_type": "Top"}}]},
+      "metadata": {"what_it_tests": "Kế thừa search type nhưng dùng topic sửa mới nhất."}
+    },
+    {
+      "id": "G_M02_url_after_clarify",
+      "phase": "B",
+      "turns": [
+        {"role": "user", "content": "Tóm tắt bài này"},
+        {"role": "user", "content": "Mình quên gửi link"},
+        {"role": "user", "content": "Đây nhé: https://example.com/research"}
+      ],
+      "failure_type": "missing_info",
+      "expect": {"tool_calls": [{"name": "fetch", "args": {"url": "https://example.com/research"}}]},
+      "metadata": {"what_it_tests": "Dùng URL được bổ sung ở turn cuối, không hỏi lại."}
+    },
+    {
+      "id": "G_M03_cancel_research",
+      "phase": "B",
+      "turns": [
+        {"role": "user", "content": "Tìm tin AI hôm nay"},
+        {"role": "user", "content": "Thôi hủy tìm kiếm"},
+        {"role": "user", "content": "Chỉ nói bạn có thể dùng những nguồn nào"}
+      ],
+      "failure_type": "unnecessary_tool",
+      "expect": {"no_tool": true},
+      "metadata": {"what_it_tests": "Không thực hiện intent đã hủy; câu meta không cần tool."}
+    },
+    {
+      "id": "G_M04_switch_social_to_web",
+      "phase": "B",
+      "turns": [
+        {"role": "user", "content": "Tìm tweet về pin thể rắn"},
+        {"role": "user", "content": "Không lấy mạng xã hội nữa"},
+        {"role": "user", "content": "Tìm tin web trong tuần này, vẫn chủ đề pin thể rắn"}
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "lookup", "args": {"query": "pin thể rắn", "topic": "news", "timeframe": "week"}}]},
+      "metadata": {"what_it_tests": "Chuyển tool và giữ topic qua ba turn."}
+    },
+    {
+      "id": "G_M05_out_of_scope_override",
+      "phase": "B",
+      "turns": [
+        {"role": "user", "content": "Tìm tin quantum computing"},
+        {"role": "user", "content": "Bỏ yêu cầu đó"},
+        {"role": "user", "content": "Viết hàm Python sắp xếp nổi bọt cho mình"}
+      ],
+      "failure_type": "out_of_scope",
+      "expect": {"no_tool": true},
+      "metadata": {"what_it_tests": "Intent cuối ngoài phạm vi và intent research trước đã hủy."}
+    }
+  ]
 }

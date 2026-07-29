@@ -19,6 +19,23 @@ def read_url(url: str = "") -> dict[str, Any]:
             headers={"Authorization": f"Bearer {key}"},
             timeout=60,
         )
+        if response.status_code == 403:
+            target_domain = domain(url)
+            if target_domain in {"facebook.com", "m.facebook.com"}:
+                raise RuntimeError(
+                    "Facebook blocked the crawler or requires a logged-in session. "
+                    "Use a publicly accessible article URL, or paste the post content "
+                    "directly for analysis."
+                )
+            raise RuntimeError(
+                f"The target site ({target_domain or 'unknown domain'}) denied crawler "
+                "access. Use a public URL or paste the content directly."
+            )
+        if response.status_code in {401, 402}:
+            raise RuntimeError(
+                "Firecrawl authorization or quota failed. Check FIRECRAWL_API_KEY "
+                "and the Firecrawl plan/quota."
+            )
         response.raise_for_status()
         data = response.json().get("data", {})
         meta = data.get("metadata", {}) or {}
@@ -30,4 +47,3 @@ def read_url(url: str = "") -> dict[str, Any]:
         }]}
     except Exception as exc:
         return err("read_url", exc)
-
